@@ -51,7 +51,7 @@ function Get-VBRServerComponentLogs {
         Write-Host -ForegroundColor Yellow "Compressing Directory"
         If(Test-path $archivepath) {Remove-item $archivepath}
         Add-Type -assembly "system.io.compression.filesystem"
-        [io.compression.zipfile]::CreateFromDirectory('LogCollector', $archivepath) 
+        [io.compression.zipfile]::CreateFromDirectory("$veeamlogpath\LogCollector", $archivepath) 
             if (!(Test-Path $archivepath)) {
                 End-Script
             } else {
@@ -62,6 +62,7 @@ function Get-VBRServerComponentLogs {
         Remove-Item -Force -Path LogCollector -Recurse 
         Write-Host '
         LogCollector folder removed'
+        }
 }
 
 
@@ -83,14 +84,12 @@ If ($NetValid -eq $true){
 
         Explorer.exe $veeamlogstargetpath
 
-        }
     }   
 else {
     End-Script
 }
 
 
-
-
-
-
+#$servaki = Get-VBRBackupRepository -ScaleOut | Get-VBRRepositoryExtent
+#
+#Export-VBRLogs -Server $hostiki -FolderPath "C:\temp\VeeamLogs"   -From 18/12/2019
