@@ -7,6 +7,22 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 }
 # Now running elevated so launch the script:
 
+function End-Script {
+        Write-Host -ForegroundColor Yellow "The log collection is complete. Please add the folder $Tapelogs to an archive (.zip, .7z), located in  $LogPath, and upload the archive to the FTP provided by Veeam Technical Support" 
+}   
+##Check for .Net 4.5
+$NetValid = $false
+$NetChk = (Get-ItemProperty "HKLM:SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full").Release -ge 378389
+If ($NetChk -eq $true){ $NetValid = $true }
+
+If ($NetValid -eq $true){
+       
+    }   
+else {
+    End-Script
+}
+
+
 
 $veeamregs = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Veeam\Veeam Backup and Replication'
 $veeamlogpath = $env:ProgramData + '\Veeam\Backup'
